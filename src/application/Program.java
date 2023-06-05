@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import entities.Product;
 
@@ -31,18 +33,21 @@ public class Program {
 				line = br.readLine();
 			}
 			
-			double amount = list.stream()
-					.mapToDouble(Product::getPrice)
-	                .sum();
-			double avg = amount / list.size();
+			double avg = list.stream()
+					.map(p -> p.getPrice())
+					.reduce(0.0, (x, y) -> x + y) / list.size();
 			
-			list.removeIf(p -> p.getPrice() > avg);
+			Comparator<String> comp = (s1, s2) -> s1.toUpperCase().compareTo(s2.toUpperCase());
 			
-			list.sort((p1, p2) -> p2.getName().toUpperCase().compareTo(p1.getName().toUpperCase()));
+			List<String> names = list.stream()
+					.filter(p -> p.getPrice() < avg)
+					.map(p -> p.getName())
+					.sorted(comp.reversed())
+					.collect(Collectors.toList());
 			
 			System.out.printf("Avarege price: %.2f%n", avg);
-			for (Product p : list) {
-				System.out.println(p.getName());
+			for (String p : names) {
+				System.out.println(p);
 			}			
 			
 		} catch (IOException e) {
