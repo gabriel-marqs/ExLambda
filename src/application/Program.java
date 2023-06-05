@@ -40,6 +40,7 @@ public class Program {
 			
 			list.sort((p1, p2) -> p2.getName().toUpperCase().compareTo(p1.getName().toUpperCase()));
 			
+			System.out.printf("Avarege price: %.2f%n", avg);
 			for (Product p : list) {
 				System.out.println(p.getName());
 			}			
