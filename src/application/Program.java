@@ -38,10 +38,10 @@ public class Program {
 			
 			list.removeIf(p -> p.getPrice() > avg);
 			
-			list.sort((p1, p2) -> p2.getPrice().compareTo(p1.getPrice()));
+			list.sort((p1, p2) -> p2.getName().toUpperCase().compareTo(p1.getName().toUpperCase()));
 			
 			for (Product p : list) {
-				System.out.println(p);
+				System.out.println(p.getName());
 			}			
 			
 		} catch (IOException e) {
